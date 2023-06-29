@@ -21,7 +21,7 @@ public class VMWriter {
         System.out.println(moduleName);
     }
 
-    String registerName(String segment, int index) {
+    String segmentPointer(String segment, int index) {
 
         if (segment.equals("local"))
             return "LCL";
@@ -53,7 +53,7 @@ public class VMWriter {
             write("@SP");
             write("M=M+1");
         } else if (seg.equals("static") || seg.equals("temp") || seg.equals("pointer")) {
-            write("@" + registerName(seg, index) + " // push " + seg + " " + index);
+            write("@" + segmentPointer (seg, index) + " // push " + seg + " " + index);
             write("D=M");
             write("@SP");
             write("A=M");
@@ -63,7 +63,8 @@ public class VMWriter {
         }
 
         else {
-            write("@" + registerName(seg, 0) + " // push " + seg + " " + index);
+            write("@" + segmentPointer (seg, 0) + " // push " + seg + " " + index);
+            //para local, argument, this e that
             write("D=M");
             write("@" + index);
             write("A=D+A");
@@ -83,10 +84,10 @@ public class VMWriter {
             write("M=M-1");
             write("A=M");
             write("D=M");
-            write("@" + registerName(seg, index));
+            write("@" + segmentPointer (seg, index));
             write("M=D");
         } else {
-            write("@" + registerName(seg, 0) + " // pop " + seg + " " + index);
+            write("@" + segmentPointer (seg, 0) + " // pop " + seg + " " + index);
             write("D=M");
             write("@" + index);
             write("D=D+A");
