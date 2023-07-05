@@ -81,6 +81,14 @@ public class VMWriter {
         }
     }
 
+     public void  writeInit() {
+        write("@256");
+        write("D=A");
+        write("@SP");
+        write("M=D");
+        writeCall("Sys.init", 0);
+    }
+
     void writePop(String seg, int index) {
         if (seg.equals("static") || seg.equals("temp") || seg.equals("pointer")) {
 
@@ -236,7 +244,6 @@ public class VMWriter {
     
         var loopLabel = funcName + "_INIT_LOCALS_LOOP";
         var loopEndLabel = funcName + "_INIT_LOCALS_END";
-    
     
         write("(" + funcName + ")" + "// initializa local variables");
         write(String.format("@%d", nLocals));

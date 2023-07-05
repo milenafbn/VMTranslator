@@ -27,11 +27,15 @@ public class Parser {
         return !commands.isEmpty();
     }
 
-    public void advance() {
-        if (hasMoreCommands()) {
-            commands.remove(0);
-        }
+    public Command nextCommand () {
+        return new Command(commands.remove(0));
     }
+
+    /* public void advance() {
+        if (hasMoreCommands()) {
+        currentPosition++;
+        }
+    } */
 
     public Command.Type commandType() {
         var command = commands.get(currentPosition)[0];
